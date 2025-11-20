@@ -1,0 +1,12 @@
+#!/usr/bin/env sh
+. "$(dirname "$0")/_/husky.sh"
+
+echo "Running pre-push checks..."
+
+npm test || exit 1
+
+# evntually enable e2e tests
+# echo "Running Playwright e2e tests..."
+# npm run test:e2e || exit 1
+
+echo "✅ All pre-push checks passed. Pushing..."

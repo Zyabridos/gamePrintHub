@@ -1,20 +1,59 @@
 {
-  "name": "sanity-learning",
+  "name": "knowledgeops",
   "version": "1.0.0",
-  "description": "",
-  "license": "ISC",
-  "author": "",
+  "private": true,
+  "description": "Real-Time Knowledge Base & Content Intelligence Platform built with Next.js, Sanity CMS, Fastify, PostgreSQL, Terraform, Ansible and GitHub Actions.",
+  "author": "Nina Ziabrina <zyabrina95@gmail.com>",
+  "license": "MIT",
   "type": "commonjs",
   "main": "index.js",
+  "keywords": [
+    "Next.js",
+    "Sanity",
+    "Fastify",
+    "PostgreSQL",
+    "Terraform",
+    "Ansible",
+    "DevOps",
+    "Fullstack",
+    "Knowledge Base",
+    "Content Platform",
+    "Realtime",
+    "TypeScript"
+  ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "test": "echo \"No tests at root — see apps/* for project tests\" && exit 0"
   },
-    "repository": {
+  "workspaces": [
+    "apps/*",
+    "cms/*",
+    "infra/*"
+  ],
+  "repository": {
     "type": "git",
-    "url": "git+https://github.com/Zyabridos/knowledgeOpts.git"
+    "url": "git+https://github.com/Zyabridos/knowledgeOps.git"
   },
+  "bugs": {
+    "url": "https://github.com/Zyabridos/knowledgeOps/issues"
+  },
+  "homepage": "https://github.com/Zyabridos/knowledgeOps#readme",
   "devDependencies": {
-    "husky": "^8.0.0"
+    "@commitlint/cli": "^20.1.0",
+    "@commitlint/config-conventional": "^20.0.0",
+    "husky": "^8.0.0",
+    "lint-staged": "^15.2.0",
+    "prettier": "^3.2.5"
+  },
+  "lint-staged": {
+    "apps/**/*.{js,jsx,ts,tsx}": [
+      "npx prettier --write"
+    ],
+    "cms/**/*.{js,jsx,ts,tsx}": [
+      "npx prettier --write"
+    ],
+    "*.{md,json,css,scss}": [
+      "npx prettier --write"
+    ]
   }
 }
