@@ -4,7 +4,7 @@
 
 ### Real-Time Knowledge Base & Content Intelligence Platform
 
-FrostOps is a **personal** fullstack playground designed to help me grow as an engineer, stay motivated, and continuously experiment with ideas across frontend, backend, DevOps and infrastructure. This is not a blog. It’s a space for my own notes, Frosthaven scenarios, STL files, small painting tips, and modeling reminders — everything that helps _me_ keep track of what I learn, test, and build on my way toward (hopefully...) creating my dream enormous WW2 diorama one day.
+FrostOps is a **personal** fullstack playground designed to help me grow as an engineer, stay motivated, and continuously experiment with ideas across frontend, backend, DevOps and infrastructure. This is not a blog. It’s a space for my own notes, boardgames scenarios, STL files, small painting tips, and modeling reminders — everything that helps _me_ keep track of what I learn, test, and build on my way toward (hopefully...) creating my dream enormous WW2 diorama one day.
 
 But FrostOps is also something more: it’s a sandbox that ties together all technologies I work with.
 Here I can freely mix and match everything — Next.js, Fastify, databases, Sanity CMS, CI/CD pipelines, e2e, Docker, Terraform, Ansible, GitHub Actions, monitoring, testing — anything I want to practice. Other technologies and languages can live in separate repositories, but FrostOps is where I combine them all in one environment. It’s essentially a “meta-project” built out of everything I’ve created before — only now, all at once.
