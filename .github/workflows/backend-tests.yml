@@ -31,11 +31,11 @@ jobs:
           cache: npm
 
       - name: Install root deps
-        run: npm ci
+        run: npm install
 
       - name: Install backend deps
         working-directory: apps/backend
-        run: npm ci
+        run: npm install
 
       - name: Run backend unit tests
         working-directory: apps/backend
