@@ -9,4 +9,4 @@ npm test || exit 1
 # echo "Running Playwright e2e tests..."
 # npm run test:e2e || exit 1
 
-echo "✅ All pre-push checks passed. Pushing..."
+echo "All pre-push checks passed. Pushing..."

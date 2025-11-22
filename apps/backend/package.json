@@ -1,30 +1,23 @@
 {
-  "name": "@knowledge_ops/backend",
-  "version": "0.1.0",
-  "description": "backend for Knowledge Opts project",
-  "homepage": "https://github.com/Zyabridos/knowledgeOpts#readme",
-  "bugs": {
-    "url": "https://github.com/Zyabridos/knowledgeOpts/issues"
-  },
-  "license": "ISC",
-  "author": "Nina Zyabrina",
-  "engines": {
-    "node": "20.17.0"
-  },
+  "name": "frosthaven-backend",
+  "version": "1.0.0",
+  "type": "module",
   "scripts": {
-    "start": "node server/bin/startServer.js",
-    "migrate": "knex migrate:latest",
-    "setup": "npm install && npm start",
-    "test": "NODE_OPTIONS=--experimental-vm-modules jest --verbose",
-    "dev": "NODE_ENV=development nodemon server/index.js",
-    "test-report": "jest --coverage && codeclimate-test-reporter < coverage/lcov.info",
-    "lint": "eslint ."
+    "dev": "tsx watch src/server.ts",
+    "build": "tsc",
+    "start": "node dist/server.js",
+    "test": "vitest"
   },
-  "jest": {
-    "testPathIgnorePatterns": [
-      "/node_modules/",
-      "/__tests__/helpers/"
-    ]
+  "dependencies": {
+    "@sanity/client": "^6.8.5",
+    "dotenv": "^16.4.0",
+    "fastify": "^4.29.1"
   },
-  "main": "index.ts"
+  "devDependencies": {
+    "@types/node": "^20.10.0",
+    "ts-node-dev": "^2.0.0",
+    "tsx": "^4.20.6",
+    "typescript": "^5.3.2",
+    "vitest": "^1.6.1"
+  }
 }
