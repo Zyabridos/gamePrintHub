@@ -1,0 +1,15 @@
+---
+- name: Prepare server and deploy app
+  hosts: webservers
+  become: true
+
+  vars:
+    project_dir: /opt/frostops
+    docker_compose_file: docker-compose.prod.yml
+    caddyfile_name: Caddyfile
+  
+    app_repo_url: "https://github.com/Zyabridos/gamePrintHub"
+
+  roles:
+    - docker
+    - app

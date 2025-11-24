@@ -1,13 +1,13 @@
-# FrostOps
+# [Game Print Hub](https://gameprinthub.online/)
 
-[![Backend Unit Tests](https://github.com/Zyabridos/knowledgeOps/actions/workflows/backend-unit.yml/badge.svg)](https://github.com/Zyabridos/knowledgeOps/actions/workflows/backend-unit.yml)
+[![Backend Unit Tests](https://https://github.com/Zyabridos/gamePrintHub/actions/workflows/backend-unit.yml/badge.svg)](https://github.com/Zyabridos/gamePrintHub/actions/workflows/backend-unit.yml)
 
 ### Real-Time Knowledge Base & Content Intelligence Platform
 
-FrostOps is a **personal** fullstack playground designed to help me grow as an engineer, stay motivated, and continuously experiment with ideas across frontend, backend, DevOps and infrastructure. This is not a blog. It’s a space for my own notes, boardgames scenarios, STL files, small painting tips, and modeling reminders — everything that helps _me_ keep track of what I learn, test, and build on my way toward (hopefully...) creating my dream enormous WW2 diorama one day.
+Game Print Hub is a **personal** fullstack playground designed to help me grow as an engineer, stay motivated, and continuously experiment with ideas across frontend, backend, DevOps and infrastructure. This is not a blog. It’s a space for my own notes, boardgames scenarios, STL files, small painting tips, and modeling reminders — everything that helps _me_ keep track of what I learn, test, and build on my way toward (hopefully...) creating my dream enormous WW2 diorama one day.
 
-But FrostOps is also something more: it’s a sandbox that ties together all technologies I work with.
-Here I can freely mix and match everything — Next.js, Fastify, databases, Sanity CMS, CI/CD pipelines, e2e, Docker, Terraform, Ansible, GitHub Actions, monitoring, testing — anything I want to practice. Other technologies and languages can live in separate repositories, but FrostOps is where I combine them all in one environment. It’s essentially a “meta-project” built out of everything I’ve created before — only now, all at once.
+But Game Print Hub is also something more: it’s a sandbox that ties together all technologies I work with.
+Here I can freely mix and match everything — Next.js, Fastify, databases, Sanity CMS, CI/CD pipelines, e2e, Docker, Terraform, Ansible, GitHub Actions, monitoring, testing — anything I want to practice. Other technologies and languages can live in separate repositories, but Game Print Hub is where I combine them all in one environment. It’s essentially a “meta-project” built out of everything I’ve created before — only now, all at once.
 
 Board games are my training ground: real-life scale modeling and historical painting are much harder, and it’s easier to practise in an imagined universe first.  
 Anyway, it’s far more fun to play with painted minis than with cardboard. So any painting and modeling, even imperfect, is always better than none.

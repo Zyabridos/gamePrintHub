@@ -1,0 +1,23 @@
+https://gameprinthub.online {
+  tls zyabrina95@gmail.com
+:80 {
+    encode gzip
+
+    @frontend {
+        path /
+        path /_next/*
+        path /static/*
+    }
+
+    handle @frontend {
+        reverse_proxy frontend:3000
+    }
+
+    handle /api/* {
+        reverse_proxy backend:5000
+    }
+
+    handle {
+        respond "Not found" 404
+    }
+}

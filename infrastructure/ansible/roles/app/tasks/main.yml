@@ -1,0 +1,42 @@
+---
+- name: Remove existing project directory (cleanup)
+  file:
+    path: "{{ project_dir }}"
+    state: absent
+
+- name: Clone project repository
+  git:
+    repo: "{{ app_repo_url }}"
+    dest: "{{ project_dir }}"
+    version: main
+    force: yes
+
+- name: Copy docker-compose file from repo root
+  copy:
+    src: "{{ playbook_dir }}/../../{{ docker_compose_file }}"
+    dest: "{{ project_dir }}/docker-compose.yml"
+    mode: "0644"
+
+- name: Copy Caddyfile from repo root
+  copy:
+    src: "{{ playbook_dir }}/../../{{ caddyfile_name }}"
+    dest: "{{ project_dir }}/Caddyfile"
+    mode: "0644"
+
+- name: Create .env file for app
+  copy:
+    dest: "{{ project_dir }}/.env"
+    mode: "0640"
+    content: |
+      NODE_ENV=production
+      BACKEND_PORT=5000
+      FRONTEND_PORT=3000
+      NEXT_PUBLIC_API_URL=http://{{ hostvars[inventory_hostname].ansible_host | default(inventory_hostname) }}/api
+
+- name: Start containers with Docker Compose
+  shell: |
+    cd {{ project_dir }}
+    docker compose pull || true
+    docker compose up -d --build
+  args:
+    chdir: "{{ project_dir }}"

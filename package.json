@@ -1,5 +1,5 @@
 {
-  "name": "knowledgeops",
+  "name": "game_print_hub",
   "version": "1.0.0",
   "private": true,
   "description": "Real-Time Knowledge Base & Content Intelligence Platform built with Next.js, Sanity CMS, Fastify, PostgreSQL, Terraform, Ansible and GitHub Actions.",
@@ -32,12 +32,12 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Zyabridos/knowledgeOps.git"
+    "url": "git+https://github.com/Zyabridos/gamePrintHub.git"
   },
   "bugs": {
-    "url": "https://github.com/Zyabridos/knowledgeOps/issues"
+    "url": "https://github.com/Zyabridos/gamePrintHub/issues"
   },
-  "homepage": "https://github.com/Zyabridos/knowledgeOps#readme",
+  "homepage": "https://github.com/Zyabridos/gamePrintHub#readme",
   "devDependencies": {
     "@commitlint/cli": "^20.1.0",
     "@commitlint/config-conventional": "^20.0.0",
