@@ -28,7 +28,7 @@ install-roles:
 
 deploy:
 	@echo "Running Ansible deployment..."
-	ansible-playbook -i ansible/inventory.ini -v ansible/playbook.yml --tags deploy
+	ansible-playbook -i ansible/inventory.ini -v ansible/playbook.yml 
  
 playbook:
 	@echo "Running Ansible entire Playbook..."

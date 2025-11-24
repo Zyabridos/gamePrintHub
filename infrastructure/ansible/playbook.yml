@@ -5,11 +5,13 @@
 
   vars:
     project_dir: /opt/frostops
-    docker_compose_file: docker-compose.prod.yml
+    docker_compose_file: docker-compose.yml
     caddyfile_name: Caddyfile
-  
+
     app_repo_url: "https://github.com/Zyabridos/gamePrintHub"
 
   roles:
-    - docker
-    - app
+    - role: docker
+      tags: ["deploy", "docker"]
+    - role: app
+      tags: ["deploy", "app"]

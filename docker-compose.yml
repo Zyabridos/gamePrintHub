@@ -1,9 +1,7 @@
-version: "3.9"
-
 services:
   backend:
     build:
-      context: ./backend
+      context: ./apps/backend
       dockerfile: Dockerfile
     env_file:
       - .env
@@ -13,7 +11,7 @@ services:
 
   frontend:
     build:
-      context: ./frontend
+      context: ./apps/frontend
       dockerfile: Dockerfile
     env_file:
       - .env

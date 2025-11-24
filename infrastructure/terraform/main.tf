@@ -11,12 +11,11 @@ provider "hcloud" {
   token = var.hcloud_token
 }
 
-# ---- 1. используем существующий SSH KEY ----------------------
 data "hcloud_ssh_key" "default" {
   name = var.existing_ssh_key_name
 }
 
-# ---- 2. создаём сервер ---------------------------------------
+# ---- Create server ---- 
 resource "hcloud_server" "web" {
   name        = var.server_name
   image       = "ubuntu-22.04"
