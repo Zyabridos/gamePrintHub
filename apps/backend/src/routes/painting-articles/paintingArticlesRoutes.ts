@@ -1,41 +1,64 @@
-import { FastifyInstance } from "fastify";
-import { z } from "zod";
-import { knex } from "../../db/knex";
+// apps/backend/src/routes/paintingArticlesRoutes.ts
+import { FastifyInstance, FastifyPluginAsync } from "fastify";
+import { db } from "../../db/knex.js";
 
-const slugParamsSchema = z.object({
-  slug: z.string().min(1),
-});
+type PaintingArticle = {
+  id: number;
+  title: string;
+  content: string;
+  created_at: string;
+  updated_at: string;
+};
 
-export async function registerPaintingArticlesRoutes(app: FastifyInstance) {
-  app.get("/api/painting-articles", async (_request, reply) => {
-    const articles = await knex("painting_articles")
-      .select(
-        "slug",
-        "title",
-        "subtitle",
-        "section",
-        "estimated_minutes",
-        "created_at",
-      )
+export const paintingArticlesRoutes: FastifyPluginAsync = async (
+  app: FastifyInstance,
+) => {
+  // GET /api/painting-articles — list
+  app.get("/api/painting-articles", async () => {
+    const articles = await db<PaintingArticle>("painting_articles")
+      .select("*")
       .orderBy("created_at", "desc");
 
-    return reply.send(articles);
+    return articles;
   });
 
-  app.get("/api/painting-articles/:slug", async (request, reply) => {
-    const parseResult = slugParamsSchema.safeParse(request.params);
-    if (!parseResult.success) {
-      return reply.status(400).send({ error: "Invalid slug" });
+  // GET /api/painting-articles/:id — particular article
+  app.get<{
+    Params: { id: string };
+  }>("/api/painting-articles/:id", async (request, reply) => {
+    const id = Number(request.params.id);
+
+    if (Number.isNaN(id)) {
+      return reply.status(400).send({ error: "Invalid id" });
     }
 
-    const { slug } = parseResult.data;
-
-    const article = await knex("painting_articles").where({ slug }).first();
+    const article = await db<PaintingArticle>("painting_articles")
+      .where({ id })
+      .first();
 
     if (!article) {
       return reply.status(404).send({ error: "Article not found" });
     }
 
-    return reply.send(article);
+    return article;
   });
-}
+
+  // POST /api/painting-articles — create new article
+  app.post<{
+    Body: { title: string; content: string };
+  }>("/api/painting-articles", async (request, reply) => {
+    const { title, content } = request.body;
+
+    if (!title || !content) {
+      return reply
+        .status(400)
+        .send({ error: "Title and content are required" });
+    }
+
+    const [created] = await db<PaintingArticle>("painting_articles")
+      .insert({ title, content })
+      .returning("*");
+
+    return reply.status(201).send(created);
+  });
+};

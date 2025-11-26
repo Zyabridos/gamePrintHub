@@ -11,6 +11,11 @@
     "outDir": "dist",
     "types": ["node"]
   },
-  "include": ["src/**/*.ts"],
+  "include": [
+    "src/**/*.ts",
+    "src/db/migrations/202511251900_create_painting_articles.js",
+    "knexfile.cjs",
+    "src/db/migrations/202511251900_create_painting_articles.js"
+  ],
   "exclude": ["node_modules", "dist", "__tests__", "__fixtures__"]
 }

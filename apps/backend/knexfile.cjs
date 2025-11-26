@@ -7,7 +7,7 @@ const shared = {
   client: 'pg',
   migrations: {
     directory: './src/db/migrations',
-    extension: 'js', // ВАЖНО: миграции будут .js
+    extension: 'js', // migrations use .js extension
   },
   seeds: {
     directory: './src/db/seeds',

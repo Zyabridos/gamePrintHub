@@ -1,8 +1,8 @@
+import config from "../../knexfile.cjs";
+
 import knex, { Knex } from "knex";
 
-const config = require("../../knexfile.cjs") as Record<string, Knex.Config>;
-
 const env = process.env.NODE_ENV || "development";
-const knexConfig = config[env];
+const knexConfig = (config as Record<string, Knex.Config>)[env];
 
 export const db = knex(knexConfig);

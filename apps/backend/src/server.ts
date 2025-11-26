@@ -23,7 +23,6 @@ server.get("/health", async () => {
 });
 
 // let it be here, evnt I will move it to a routes/index.ts later when I decide on architecture
-server.register(frosthavenStatsRoute, { prefix: "/api/frosthaven" });
 server.register(paintingArticlesRoutes);
 
 const start = async () => {
