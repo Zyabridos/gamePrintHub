@@ -20,6 +20,21 @@ jobs:
   test-backend:
     runs-on: ubuntu-latest
 
+    services:
+      postgres:
+        image: postgres:15
+        ports:
+          - "5433:5432"
+        env:
+          POSTGRES_USER: ${{ secrets.TEST_DB_USER }}
+          POSTGRES_PASSWORD: ${{ secrets.TEST_DB_PASSWORD }}
+          POSTGRES_DB: ${{ secrets.TEST_DB_NAME }}
+        options: >-
+          --health-cmd="pg_isready -U ${{ secrets.TEST_DB_USER }}"
+          --health-interval=5s
+          --health-timeout=5s
+          --health-retries=10
+
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -37,6 +52,32 @@ jobs:
         working-directory: apps/backend
         run: npm install
 
+      - name: Set environment variables for tests
+        working-directory: apps/backend
+        run: |
+          echo "DB_HOST=localhost" >> .env.test
+          echo "DB_PORT=5433" >> .env.test
+          echo "DB_USER=${{ secrets.TEST_DB_USER }}" >> .env.test
+          echo "DB_PASSWORD=${{ secrets.TEST_DB_PASSWORD }}" >> .env.test
+          echo "DB_NAME=${{ secrets.TEST_DB_NAME }}" >> .env.test
+          echo "DATABASE_URL=postgres://${{ secrets.TEST_DB_USER }}:${{ secrets.TEST_DB_PASSWORD }}@localhost:5433/${{ secrets.TEST_DB_NAME }}" >> .env.test
+
+      - name: Wait for PostgreSQL
+        run: |
+          for i in {1..30}; do
+            nc -z localhost 5433 && echo "Postgres is up" && break
+            echo "Waiting for Postgres..."
+            sleep 1
+          done
+
+      - name: Run migrations
+        working-directory: apps/backend
+        env:
+          NODE_ENV: test
+        run: npm run migrate:latest
+
       - name: Run backend unit tests
         working-directory: apps/backend
+        env:
+          NODE_ENV: test
         run: npm test --silent
