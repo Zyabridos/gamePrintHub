@@ -9,7 +9,7 @@ type PaintingArticle = {
 };
 
 async function getArticles(): Promise<PaintingArticle[]> {
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
   const res = await fetch(`${apiUrl}/api/painting-articles`, {
     // so we always get fresh data
