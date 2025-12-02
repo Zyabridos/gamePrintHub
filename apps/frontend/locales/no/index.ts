@@ -3,6 +3,7 @@ const no = {
     home: "Hjem",
     frosthaven: "Frosthaven-scenarier",
     printing: "3D-print-lagring",
+    painting_articles: "Malerartikler",
   },
   home: {
     title: "Frosthaven Hub",

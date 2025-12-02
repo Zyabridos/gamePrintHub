@@ -1,6 +1,14 @@
 # Ansible / Terraform secrets
+.terraform/
+.terraform.lock.hcl
+*.tfstate
+*.tfstate.backup
+*.log
+crash.log
+terraform.tfvars
+secrets.auto.tfvars
+secrets.backend.tfvars
 ansible/vault-password
-terraform/terraform.tfvars
 
 # Dependencies
 node_modules/
@@ -42,3 +50,6 @@ Thumbs.db
 # TypeScript
 *.tsbuildinfo
 next-env.d.ts
+
+# Database
+postgres_data/

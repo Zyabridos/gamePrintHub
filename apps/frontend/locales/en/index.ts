@@ -3,6 +3,7 @@ const en = {
     home: "Home",
     frosthaven: "Frosthaven Scenarios",
     printing: "3D Printing Storage",
+    painting_articles: "Painting Articles",
   },
   home: {
     title: "Frosthaven Hub",

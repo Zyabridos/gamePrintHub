@@ -20,6 +20,28 @@ jobs:
   test-backend:
     runs-on: ubuntu-latest
 
+    env:
+      TEST_DB_HOST: localhost
+      TEST_DB_PORT: 5433
+      TEST_DB_USER: ${{ secrets.TEST_DB_USER }}
+      TEST_DB_PASSWORD: ${{ secrets.TEST_DB_PASSWORD }}
+      TEST_DB_NAME: ${{ secrets.TEST_DB_NAME }}
+
+    services:
+      postgres:
+        image: postgres:15
+        ports:
+          - "5433:5432"
+        env:
+          POSTGRES_USER: ${{ secrets.TEST_DB_USER }}
+          POSTGRES_PASSWORD: ${{ secrets.TEST_DB_PASSWORD }}
+          POSTGRES_DB: ${{ secrets.TEST_DB_NAME }}
+        options: >-
+          --health-cmd="pg_isready -U $POSTGRES_USER"
+          --health-interval=5s
+          --health-timeout=5s
+          --health-retries=10
+
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -37,6 +59,22 @@ jobs:
         working-directory: apps/backend
         run: npm install
 
+      - name: Wait for PostgreSQL
+        run: |
+          for i in {1..30}; do
+            nc -z localhost 5433 && echo "Postgres is up" && break
+            echo "Waiting for Postgres on port 5433..."
+            sleep 1
+          done
+
+      - name: Run migrations
+        working-directory: apps/backend
+        env:
+          NODE_ENV: test
+        run: npm run migrate:latest
+
       - name: Run backend unit tests
         working-directory: apps/backend
+        env:
+          NODE_ENV: test
         run: npm test --silent

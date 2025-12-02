@@ -13,6 +13,7 @@ export function Navbar() {
     { href: "/", label: t.nav.home },
     { href: "/frosthaven-scenarios", label: t.nav.frosthaven },
     { href: "/3d-printing-storage", label: t.nav.printing },
+    { href: "painting-articles", label: t.nav.painting_articles },
   ];
 
   return (
@@ -20,7 +21,7 @@ export function Navbar() {
       <nav className="mx-auto flex max-w-5xl items-center justify-between px-4 py-3">
         <Link href="/" className="flex items-center gap-2">
           <span className="text-xl font-bold tracking-tight">
-            Frosthaven Hub
+            Games & Print Hub
           </span>
         </Link>
 

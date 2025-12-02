@@ -1,12 +1,12 @@
-FROM node:20.18.1
+FROM node:20
 
 WORKDIR /app
 
-COPY package*.json ./
+COPY apps/backend/package*.json ./
 
 RUN npm ci || npm install
 
-COPY . .
+COPY apps/backend/ ./
 
 RUN npm run build
 

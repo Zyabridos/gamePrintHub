@@ -3,6 +3,7 @@ const ru = {
     home: "Главная",
     frosthaven: "Сценарии Frosthaven",
     printing: "3D-печать и хранение",
+    painting_articles: "Статьи по покраске",
   },
   home: {
     title: "Frosthaven Hub",
