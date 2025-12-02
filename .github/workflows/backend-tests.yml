@@ -20,17 +20,22 @@ jobs:
   test-backend:
     runs-on: ubuntu-latest
 
+    env:
+      TEST_DB_USER: ${{ secrets.TEST_DB_USER }}
+      TEST_DB_PASSWORD: ${{ secrets.TEST_DB_PASSWORD }}
+      TEST_DB_NAME: ${{ secrets.TEST_DB_NAME }}
+
     services:
       postgres:
         image: postgres:15
         ports:
           - "5433:5432"
         env:
-          POSTGRES_USER: ${{ secrets.TEST_DB_USER }}
-          POSTGRES_PASSWORD: ${{ secrets.TEST_DB_PASSWORD }}
-          POSTGRES_DB: ${{ secrets.TEST_DB_NAME }}
+          POSTGRES_USER: ${{ env.TEST_DB_USER }}
+          POSTGRES_PASSWORD: ${{ env.TEST_DB_PASSWORD }}
+          POSTGRES_DB: ${{ env.TEST_DB_NAME }}
         options: >-
-          --health-cmd="pg_isready -U ${{ secrets.TEST_DB_USER }}"
+          --health-cmd="pg_isready -U $POSTGRES_USER"
           --health-interval=5s
           --health-timeout=5s
           --health-retries=10
@@ -54,13 +59,17 @@ jobs:
 
       - name: Set environment variables for tests
         working-directory: apps/backend
+        env:
+          TEST_DB_USER: ${{ env.TEST_DB_USER }}
+          TEST_DB_PASSWORD: ${{ env.TEST_DB_PASSWORD }}
+          TEST_DB_NAME: ${{ env.TEST_DB_NAME }}
         run: |
           echo "DB_HOST=localhost" >> .env.test
           echo "DB_PORT=5433" >> .env.test
-          echo "DB_USER=${{ secrets.TEST_DB_USER }}" >> .env.test
-          echo "DB_PASSWORD=${{ secrets.TEST_DB_PASSWORD }}" >> .env.test
-          echo "DB_NAME=${{ secrets.TEST_DB_NAME }}" >> .env.test
-          echo "DATABASE_URL=postgres://${{ secrets.TEST_DB_USER }}:${{ secrets.TEST_DB_PASSWORD }}@localhost:5433/${{ secrets.TEST_DB_NAME }}" >> .env.test
+          echo "DB_USER=$TEST_DB_USER" >> .env.test
+          echo "DB_PASSWORD=$TEST_DB_PASSWORD" >> .env.test
+          echo "DB_NAME=$TEST_DB_NAME" >> .env.test
+          echo "DATABASE_URL=postgres://$TEST_DB_USER:$TEST_DB_PASSWORD@localhost:5433/$TEST_DB_NAME" >> .env.test
 
       - name: Wait for PostgreSQL
         run: |
