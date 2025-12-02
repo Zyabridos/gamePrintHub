@@ -1,12 +1,12 @@
-project_dir: /root/gamePrintHub
+# Backend config
+api_port: 5000
+node_env: production
 
-frontend_env_vars:
-  NODE_ENV: "production"
-  BACKEND_PORT: 5000
-  FRONTEND_PORT: 3000
+# Frontend / Next.js
+production_frontend_url: "https://gameprinthub.online"
+next_public_api_url: "{{ production_frontend_url }}/api"
+internal_api_url: "http://backend:5000"
 
-  NEXT_PUBLIC_API_URL: "https://{{ hostvars[inventory_hostname].ansible_host }}/api"
-
-  NEXT_PUBLIC_SANITY_PROJECT_ID: "{{ vault_sanity_project_id }}"
-  NEXT_PUBLIC_SANITY_DATASET: "production"
-  NEXT_PUBLIC_SANITY_API_VERSION: "2025-11-01"
+# Caddy config
+domain_name: "gameprinthub.online"
+letsencrypt_email: "zyabrina95@gmail.com"

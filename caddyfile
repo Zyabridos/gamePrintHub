@@ -1,6 +1,5 @@
-https://gameprinthub.online {
-  tls zyabrina95@gmail.com
-:80 {
+gameprinthub.online {
+    tls zyabrina95@gmail.com
     encode gzip
 
     @frontend {

@@ -1,32 +1,36 @@
-- name: Ensure project directory exists TODO remove this task when infra is complete
-  file:
-    path: "{{ project_dir }}"
+- name: Ensure app directory exists on remote
+  ansible.builtin.file:
+    path: "{{ project_root_remote }}"
     state: directory
     owner: root
     group: root
     mode: "0755"
-  tags: deploy
 
-- name: Sync app repo from GitHub
-  git:
-    repo: "{{ app_repo_url }}"
-    dest: "{{ project_dir }}"
-    version: "{{ app_repo_version }}"
-    force: yes
-  tags: deploy
+- name: Sync project files to remote (excluding heavy stuff)
+  ansible.posix.synchronize:
+    src: "{{ project_root_local }}/"
+    dest: "{{ project_root_remote }}/"
+    delete: yes
+    rsync_opts:
+      - "--exclude=.git"
+      - "--exclude=node_modules"
+      - "--exclude=postgres_data"
+      - "--exclude=dist"
+      - "--exclude=.turbo"
+  delegate_to: localhost
+  become: false
 
-- name: Ensure frontend app directory exists TODO remove this task when infra is complete
-  file:
-    path: "{{ project_dir }}/apps/frontend"
-    state: directory
-    owner: root
-    group: root
-    mode: "0755"
-  tags: deploy
-
-- name: Generate frontend .env.production
+- name: Render .env for production
   ansible.builtin.template:
-    src: templates/secrets/frontend.env.production.j2
-    dest: "{{ project_dir }}/apps/frontend/.env.production"
-    mode: "0600"
-  tags: deploy
+    src: secrets/.env.production.j2 
+    dest: "{{ project_root_remote }}/.env"
+    owner: root
+    group: root
+    mode: "0640"
+
+- name: Pull images / build and start stack
+  ansible.builtin.command:
+    chdir: "{{ project_root_remote }}"
+    cmd: docker compose up -d --build
+  register: compose_result
+  changed_when: "'Creating' in compose_result.stdout or 'Recreating' in compose_result.stdout or 'Building' in compose_result.stdout"
