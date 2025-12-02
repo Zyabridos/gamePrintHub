@@ -1,12 +1,14 @@
-FROM node:20.18.1
+FROM node:20
 
 WORKDIR /app
 
-COPY package*.json ./
-
+COPY apps/frontend/package*.json ./
 RUN npm ci || npm install
 
-COPY . .
+COPY apps/frontend/ ./
+
+ARG NEXT_PUBLIC_API_URL
+ENV NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL}
 
 RUN npm run build
 

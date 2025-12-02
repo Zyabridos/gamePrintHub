@@ -21,12 +21,15 @@ export default function NewPaintingArticlePage() {
 
     try {
       const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+      console.log("API URL:", apiUrl);
 
       const res = await fetch(`${apiUrl}/api/painting-articles`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ title, content }),
       });
+
+      console.log("sending POST to", `${apiUrl}/api/painting-articles`);
 
       if (!res.ok) {
         const data = await res.json().catch(() => ({}));

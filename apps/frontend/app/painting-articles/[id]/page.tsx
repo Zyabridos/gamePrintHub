@@ -1,6 +1,12 @@
-import React from "react";
+// the logic is overcomplicated per now to weird Next.js behavior
+// (sometimes it gives params as a Promise, sometimes as a normal object)
+// although in CSR it is always normal object, but the choice was made to SSR.
+// TODO: investigate later and maybe simplify
+import { apiFetch } from "@/lib/apiClient";
 
-type PaintingArticle = {
+export const dynamic = "force-dynamic"; // this will disable static optimization for the page
+
+export type PaintingArticle = {
   id: number;
   title: string;
   content: string;
@@ -8,36 +14,66 @@ type PaintingArticle = {
   updated_at: string;
 };
 
+type PageParams =
+  | { id: string } // normal case
+  | Promise<{ id: string }>; // just in case types start acting weird
+
 type PageProps = {
-  params: Promise<{ id: string }>;
+  params: PageParams;
 };
 
-async function getArticle(id: string): Promise<PaintingArticle | null> {
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+async function resolveParams(params: PageParams): Promise<{ id?: string }> {
+  // Just in case Next gives a promise
+  // (await on a normal object will also just return the object)
+  const resolved = await (params as any);
+  return resolved ?? {};
+}
 
-  const res = await fetch(`${apiUrl}/api/painting-articles/${id}`, {
+async function getArticle(
+  id: string | undefined,
+): Promise<PaintingArticle | null> {
+  console.log("[getArticle] raw id:", id);
+
+  if (!id) {
+    console.error("[getArticle] No id provided on server");
+    return null;
+  }
+
+  const numericId = Number(id);
+  if (Number.isNaN(numericId)) {
+    console.error("[getArticle] Invalid numeric id on server:", id);
+    return null;
+  }
+
+  const res = await apiFetch(`/api/painting-articles/${numericId}`, {
     cache: "no-store",
   });
 
+  console.log("[getArticle] response status:", res.status, "url:", res.url);
+
   if (res.status === 404) {
+    console.warn("[getArticle] article not found:", numericId);
     return null;
   }
 
   if (!res.ok) {
-    console.error("Failed to fetch painting article", await res.text());
+    console.error(
+      "[getArticle] Failed to fetch painting article",
+      await res.text(),
+    );
     return null;
   }
 
-  return res.json();
+  return (await res.json()) as PaintingArticle;
 }
 
-export default async function PaintingArticleDetailsPage({
-  params,
-}: PageProps) {
-  // IMPORTANT: await params to get the actual params object
-  const { id } = await params;
+export default async function PaintingArticleDetailsPage(props: PageProps) {
+  const { params } = props;
 
-  const article = await getArticle(id);
+  const resolved = await resolveParams(params);
+  console.log("[PaintingArticleDetailsPage] resolved params:", resolved);
+
+  const article = await getArticle(resolved.id);
 
   if (!article) {
     return (

@@ -1,12 +1,14 @@
 import { apiFetch } from "@/lib/apiClient";
 
-type PaintingArticle = {
+// TODO: move to shared types
+export type PaintingArticle = {
   id: number;
   title: string;
   content: string;
   created_at: string;
   updated_at: string;
 };
+
 async function getArticles(): Promise<PaintingArticle[]> {
   // TODO: remove hardcoded URL
   const res = await apiFetch("/api/painting-articles", {

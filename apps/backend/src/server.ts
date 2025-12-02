@@ -1,11 +1,17 @@
 import Fastify from "fastify";
 import dotenv from "dotenv";
-import path from "path";
 import cors from "@fastify/cors";
+import { fileURLToPath } from "url";
+import path, { dirname } from "path";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 import { paintingArticlesRoutes } from "./routes/painting-articles/paintingArticlesRoutes.js";
 
-dotenv.config({ path: path.resolve(__dirname, "../../..", ".env") });
+dotenv.config({
+  path: path.resolve(__dirname, "../../", ".env"),
+});
 
 const server = Fastify({ logger: true });
 
