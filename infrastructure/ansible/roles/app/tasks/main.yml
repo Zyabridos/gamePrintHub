@@ -22,7 +22,7 @@
 
 - name: Render .env for production
   ansible.builtin.template:
-    src: secrets/.env.production.j2 
+    src: secrets/.env.production.j2
     dest: "{{ project_root_remote }}/.env"
     owner: root
     group: root
