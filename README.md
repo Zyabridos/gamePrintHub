@@ -39,6 +39,7 @@ to steadily build the skills and confidence I need to eventually create somethin
 This project is my way of learning by doing, having fun along the way, and keeping track of every improvement — technical or artistic.
 
 ## Features
+*(Some are the features do not exist yet, but I have huge plans)*
 
 ### Content & Knowledge
 
@@ -57,7 +58,6 @@ This project is my way of learning by doing, having fun along the way, and keepi
 
 ### Semantic Search
 
-- Trigram similarity (`pg_trgm`) for typo-tolerant search
 - Weighted relevance ranking
 - Combined metadata + text search
 
@@ -79,10 +79,11 @@ This project is my way of learning by doing, having fun along the way, and keepi
 
 ### Frontend
 
-- Next.js 15 (App Router, SSR)
+- Next.js 15 (App Router, SSR, CSR)
 - React 18 (Client + Server Components)
 - TypeScript
 - Tailwind CSS
+- Formik for CSR validation
 
 ### Backend
 
@@ -96,8 +97,6 @@ This project is my way of learning by doing, having fun along the way, and keepi
 
 - PostgreSQL
 - Knex query builder + migrations
-- GIN indexes + trigram search
-- Audit, analytics & engagement tables
 
 ### Infrastructure & DevOps
 
