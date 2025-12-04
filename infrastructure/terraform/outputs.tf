@@ -1,4 +1,4 @@
-output "server_ip" {
-  description = "Public IPv4 address of the app server"
-  value       = hcloud_server.web.ipv4_address
+output "game_print_hub_prod_ipv4" {
+  description = "Public IPv4 address of game-print-hub-prod"
+  value       = hcloud_server.game_print_hub_prod.ipv4_address
 }

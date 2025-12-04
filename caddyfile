@@ -1,23 +1,22 @@
-https://gameprinthub.online {
-  tls zyabrina95@gmail.com
-:80 {
+gameprinthub.online {
+    tls zyabrina95@gmail.com
     encode gzip
 
-    @frontend {
-        path /
-        path /_next/*
-        path /static/*
+    @api path /api/*
+    handle @api {
+        reverse_proxy backend:5000
     }
 
-    handle @frontend {
+    # everything else that is not /api/* goes to frontend
+    handle {
         reverse_proxy frontend:3000
     }
 
-    handle /api/* {
-        reverse_proxy backend:5001
-    }
+    # 404 rendered by frontend
+}
 
-    handle {
-        respond "Not found" 404
-    }
+
+# www -> non-www
+www.gameprinthub.online {
+    redir https://gameprinthub.online{uri}
 }

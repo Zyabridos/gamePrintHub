@@ -4,26 +4,25 @@ variable "hcloud_token" {
   sensitive   = true
 }
 
+variable "ssh_key_name" {
+  description = "Name of SSH key in Hetzner Cloud"
+  type        = string
+}
+
 variable "server_type" {
   description = "Hetzner server type"
   type        = string
-  default     = "cx22"
+  default     = "cx23"
 }
 
-variable "hcloud_location" {
+variable "image" {
+  description = "Image name (ubuntu-24.04, etc.)"
+  type        = string
+  default     = "ubuntu-24.04"
+}
+
+variable "location" {
   description = "Hetzner location"
   type        = string
   default     = "hel1"
-}
-
-variable "server_name" {
-  description = "Server name"
-  type        = string
-  default     = "frostops-prod"
-}
-
-variable "existing_ssh_key_name" {
-  description = "Name of existing SSH key in Hetzner Cloud"
-  type        = string
-  default     = "frostops-key"
 }

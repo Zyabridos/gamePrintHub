@@ -1,0 +1,12 @@
+# Backend config
+api_port: 5000
+node_env: production
+
+# Frontend / Next.js
+production_frontend_url: "https://gameprinthub.online"
+next_public_api_url: "{{ production_frontend_url }}/api"
+internal_api_url: "http://backend:5000"
+
+# Caddy config
+domain_name: "gameprinthub.online"
+letsencrypt_email: "zyabrina95@gmail.com"

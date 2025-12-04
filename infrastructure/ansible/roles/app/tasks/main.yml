@@ -1,13 +1,36 @@
----
-- name: Create env files for app
-  copy:
-    dest: "{{ project_dir }}/{{ item }}"
+- name: Ensure app directory exists on remote
+  ansible.builtin.file:
+    path: "{{ project_root_remote }}"
+    state: directory
+    owner: root
+    group: root
+    mode: "0755"
+
+- name: Sync project files to remote (excluding heavy stuff)
+  ansible.posix.synchronize:
+    src: "{{ project_root_local }}/"
+    dest: "{{ project_root_remote }}/"
+    delete: yes
+    rsync_opts:
+      - "--exclude=.git"
+      - "--exclude=node_modules"
+      - "--exclude=postgres_data"
+      - "--exclude=dist"
+      - "--exclude=.turbo"
+  delegate_to: localhost
+  become: false
+
+- name: Render .env for production
+  ansible.builtin.template:
+    src: secrets/.env.production.j2
+    dest: "{{ project_root_remote }}/.env"
+    owner: root
+    group: root
     mode: "0640"
-    content: |
-      NODE_ENV=production
-      BACKEND_PORT=5001
-      FRONTEND_PORT=3000
-      NEXT_PUBLIC_API_URL=http://{{ hostvars[inventory_hostname].ansible_host | default(inventory_hostname) }}/api
-  loop:
-    - .env
-    - .env.production
+
+- name: Pull images / build and start stack
+  ansible.builtin.command:
+    chdir: "{{ project_root_remote }}"
+    cmd: docker compose up -d --build
+  register: compose_result
+  changed_when: "'Creating' in compose_result.stdout or 'Recreating' in compose_result.stdout or 'Building' in compose_result.stdout"

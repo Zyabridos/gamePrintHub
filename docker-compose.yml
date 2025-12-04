@@ -40,17 +40,18 @@ services:
     depends_on:
       - backend
     restart: unless-stopped
+
     ports:
       - "3000:3000"
 
-
-  # caddy:
-  #   image: caddy:alpine
-  #   restart: unless-stopped
-  #   ports:
-  #     - "80:80"
-  #   volumes:
-  #     - ./Caddyfile:/etc/caddy/Caddyfile:ro
-  #   depends_on:
-  #     - frontend
-  #     - backend
+  caddy:
+    image: caddy:alpine
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./caddyfile:/etc/caddy/Caddyfile:ro
+    depends_on:
+      - frontend
+      - backend
