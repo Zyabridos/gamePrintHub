@@ -52,8 +52,13 @@ jobs:
           ANSIBLE_HOST_KEY_CHECKING: "false"
           ANSIBLE_PRIVATE_KEY_FILE: ~/.ssh/hetzner_gameprinthub
           ANSIBLE_REMOTE_USER: ${{ secrets.SSH_USER }}
+          ANSIBLE_VAULT_PASSWORD: ${{ secrets.ANSIBLE_VAULT_PASSWORD }}
         run: |
-          ansible-playbook -i inventory.ini playbook.yml
+          echo "$ANSIBLE_VAULT_PASSWORD" > vault_pass.txt
+          chmod 600 vault_pass.txt
+
+          ansible-playbook -i inventory.ini playbook.yml --vault-password-file vault_pass.txt
+
 
       - name: Wait for services to start
         run: sleep 60
