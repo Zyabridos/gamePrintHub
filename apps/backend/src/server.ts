@@ -25,7 +25,7 @@ await server.register(cors, {
   methods: ["GET", "POST", "OPTIONS"],
 });
 
-server.get("/health", async () => {
+server.get("/api/health", async () => {
   return { status: "ok" };
 });
 
