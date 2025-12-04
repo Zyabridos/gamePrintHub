@@ -36,12 +36,14 @@ jobs:
         working-directory: infrastructure/terraform
         env:
           TF_VAR_hcloud_token: ${{ secrets.HCLOUD_TOKEN }}
+          TF_VAR_ssh_key_name: ${{ secrets.HETZNER_SSH_KEY }}
         run: terraform init -input=false
 
       - name: Terraform apply
         working-directory: infrastructure/terraform
         env:
           TF_VAR_hcloud_token: ${{ secrets.HCLOUD_TOKEN }}
+          TF_VAR_ssh_key_name: ${{ secrets.HETZNER_SSH_KEY }}
         run: terraform apply -input=false -auto-approve
 
       - name: Run Ansible deploy
