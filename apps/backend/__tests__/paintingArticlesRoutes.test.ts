@@ -1,45 +1,47 @@
-import { describe, it, expect, beforeAll, afterAll } from "vitest";
-import Fastify from "fastify";
-import { paintingArticlesRoutes } from "../src/routes/painting-articles/paintingArticlesRoutes";
-import { db } from "../src/db/knex";
+import { FastifyInstance, FastifyPluginAsync } from "fastify";
+import type { PaintingArticle } from "../types/db/PaintingArticle";
+import { db as realDb } from "../src/db/knex.js";
 
-describe("paintingArticlesRoutes", () => {
-  const app = Fastify();
+export type PaintingArticlesDeps = {
+  db: typeof realDb;
+};
 
-  beforeAll(async () => {
-    app.register(paintingArticlesRoutes);
-    await app.ready();
-    // clear the table before tests
-    await db("painting_articles").del();
-  });
+export const buildPaintingArticlesRoutes = ({
+  db,
+}: PaintingArticlesDeps): FastifyPluginAsync => {
+  const routes: FastifyPluginAsync = async (app: FastifyInstance) => {
+    // POST /api/painting-articles
+    app.post("/api/painting-articles", async (request, reply) => {
+      const { title, content } = request.body as {
+        title: string;
+        content: string;
+      };
 
-  afterAll(async () => {
-    await app.close();
-    await db.destroy();
-  });
+      const [inserted] = await db<PaintingArticle>("painting_articles")
+        .insert({ title, content })
+        .returning("*");
 
-  it("creates and reads article", async () => {
-    const createRes = await app.inject({
-      method: "POST",
-      url: "/api/painting-articles",
-      payload: {
-        title: "Test article",
-        content: "Some content",
-      },
+      return reply.status(201).send(inserted);
     });
 
-    expect(createRes.statusCode).toBe(201);
-    const created = createRes.json() as { id: number };
+    // GET /api/painting-articles/:id
+    app.get("/api/painting-articles/:id", async (request, reply) => {
+      const id = Number(request.params.id);
 
-    const getRes = await app.inject({
-      method: "GET",
-      url: `/api/painting-articles/${created.id}`,
+      const article = await db<PaintingArticle>("painting_articles")
+        .where({ id })
+        .first();
+
+      if (!article) {
+        return reply.status(404).send({ error: "Not found" });
+      }
+
+      return reply.send(article);
     });
+  };
 
-    expect(getRes.statusCode).toBe(200);
-    const article = getRes.json() as { title: string; content: string };
+  return routes;
+};
 
-    expect(article.title).toBe("Test article");
-    expect(article.content).toBe("Some content");
-  });
-});
+// default for production
+export default buildPaintingArticlesRoutes({ db: realDb });

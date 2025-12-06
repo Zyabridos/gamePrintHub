@@ -3,11 +3,10 @@ import dotenv from "dotenv";
 import cors from "@fastify/cors";
 import { fileURLToPath } from "url";
 import path, { dirname } from "path";
+import addRoutes from "./routes/index.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
-
-import { paintingArticlesRoutes } from "./routes/painting-articles/paintingArticlesRoutes.js";
 
 dotenv.config({
   path: path.resolve(__dirname, "../../", ".env"),
@@ -29,8 +28,7 @@ server.get("/api/health", async () => {
   return { status: "ok" };
 });
 
-// let it be here, evnt I will move it to a routes/index.ts later when I decide on architecture
-server.register(paintingArticlesRoutes);
+await addRoutes(server);
 
 const start = async () => {
   try {

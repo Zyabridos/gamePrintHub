@@ -1,21 +1,14 @@
 import { FastifyInstance, FastifyPluginAsync } from "fastify";
-import { db } from "../../db/knex.js";
+import type { PaintingArticlePublic } from "@gameprinthub/shared-types";
+import { db } from "../db/knex.js";
 
-type PaintingArticle = {
-  id: number;
-  title: string;
-  content: string;
-  created_at: string;
-  updated_at: string;
-};
-
-export const paintingArticlesRoutes: FastifyPluginAsync = async (
+const paintingArticlesRoutes: FastifyPluginAsync = async (
   app: FastifyInstance,
 ) => {
   // GET /api/painting-articles — SSR (for SEO + performance) with some CSR "islands":
   // ArticlesSearch, TagFiler, Pagination and so on (not implemented yet, per now it is simple list)
   app.get("/api/painting-articles", async () => {
-    const articles = await db<PaintingArticle>("painting_articles")
+    const articles = await db<PaintingArticlePublic>("painting_articles")
       .select("*")
       .orderBy("created_at", "desc");
 
@@ -32,7 +25,7 @@ export const paintingArticlesRoutes: FastifyPluginAsync = async (
       return reply.status(400).send({ error: "Invalid id" });
     }
 
-    const article = await db<PaintingArticle>("painting_articles")
+    const article = await db<PaintingArticlePublic>("painting_articles")
       .where({ id })
       .first();
 
@@ -55,7 +48,7 @@ export const paintingArticlesRoutes: FastifyPluginAsync = async (
         .send({ error: "Title and content are required" });
     }
 
-    const [created] = await db<PaintingArticle>("painting_articles")
+    const [created] = await db<PaintingArticlePublic>("painting_articles")
       .insert({ title, content })
       .returning("*");
 
@@ -66,3 +59,5 @@ export const paintingArticlesRoutes: FastifyPluginAsync = async (
 // TODO:
 // edit article: /painting-articles/[id]/edit (per now I consider CSR here, since it is not public data, so SEO is not important. And also to simplify form handling)
 // user`s articles: /my/painting-articles (per now I consider CSR here, since it is not public data, so SEO is not important)
+
+export default paintingArticlesRoutes;

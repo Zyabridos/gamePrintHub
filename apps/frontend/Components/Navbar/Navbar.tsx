@@ -10,8 +10,17 @@ export function Navbar() {
   const { t, locale, setLocale } = useLocale();
 
   const navItems = [
-    { href: "/3d-printing-storage", label: t.nav.printing },
-    { href: "painting-articles", label: t.nav.painting_articles },
+    { href: "/3d-printing-storage", label: t.nav.printing, external: false },
+    {
+      href: "/painting-articles",
+      label: t.nav.painting_articles,
+      external: false,
+    },
+    {
+      href: "https://github.com/Zyabridos/gamePrintHub",
+      label: "Source Code",
+      external: true,
+    },
   ];
 
   return (
@@ -25,21 +34,31 @@ export function Navbar() {
 
         <ul className="flex items-center gap-4 text-sm">
           {navItems.map((item) => {
-            const isActive = pathname.startsWith(item.href);
+            const isActive = !item.external && pathname.startsWith(item.href);
+
+            const linkClasses = cn(
+              "rounded-full px-3 py-1 transition-colors",
+              isActive
+                ? "bg-slate-900 text-white dark:bg-slate-100 dark:text-slate-900"
+                : "text-slate-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800",
+            );
 
             return (
               <li key={item.href}>
-                <Link
-                  href={item.href}
-                  className={cn(
-                    "rounded-full px-3 py-1 transition-colors",
-                    isActive
-                      ? "bg-slate-900 text-white dark:bg-slate-100 dark:text-slate-900"
-                      : "text-slate-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800",
-                  )}
-                >
-                  {item.label}
-                </Link>
+                {item.external ? (
+                  <a
+                    href={item.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={linkClasses}
+                  >
+                    {item.label}
+                  </a>
+                ) : (
+                  <Link href={item.href} className={linkClasses}>
+                    {item.label}
+                  </Link>
+                )}
               </li>
             );
           })}
