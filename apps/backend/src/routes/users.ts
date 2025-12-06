@@ -17,7 +17,7 @@ export const buildUsersRoutes = ({
   db,
 }: UsersRoutesDeps): FastifyPluginAsync => {
   const usersRoutes: FastifyPluginAsync = async (app: FastifyInstance) => {
-    // POST /api/users - create new user
+    // POST /api/users/new - create new user
     app.post<{
       Body: { username: string; email: string; password: string };
       Reply:
@@ -26,7 +26,7 @@ export const buildUsersRoutes = ({
             error: string;
             message?: string;
           };
-    }>("/api/users", async (request, reply) => {
+    }>("/api/users/new", async (request, reply) => {
       const { username, email, password } = request.body;
 
       if (!username || !email || !password) {

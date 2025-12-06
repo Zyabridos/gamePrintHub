@@ -2,9 +2,12 @@
 
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useTranslation } from "react-i18next";
 
 export default function NewPaintingArticlePage() {
   const router = useRouter();
+  const { t } = useTranslation("paintingArticles");
+
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -26,13 +29,12 @@ export default function NewPaintingArticlePage() {
 
       if (!res.ok) {
         const data = await res.json().catch(() => ({}));
-        throw new Error(data.error || "Failed to create article");
+        throw new Error(data.error || t("new.errors.createFailed"));
       }
 
-      // On success, navigate back to the articles list
       router.push("/painting-articles");
     } catch (err: any) {
-      setError(err.message ?? "Unknown error");
+      setError(err.message ?? t("new.errors.unknown"));
     } finally {
       setIsSubmitting(false);
     }
@@ -40,15 +42,14 @@ export default function NewPaintingArticlePage() {
 
   return (
     <main className="mx-auto max-w-3xl px-4 py-8">
-      <h1 className="mb-4 text-3xl font-bold">Create painting article</h1>
-      <p className="mb-6 text-sm text-gray-400">
-        Here you can create a new painting article. Fill in the title and
-        content, then hit "Save article" to store it.
-      </p>
+      <h1 className="mb-4 text-3xl font-bold">{t("new.title")}</h1>
+      <p className="mb-6 text-sm text-gray-400">{t("new.description")}</p>
 
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <label className="mb-1 block text-sm font-semibold">Title</label>
+          <label className="mb-1 block text-sm font-semibold">
+            {t("new.fields.title")}
+          </label>
           <input
             className="w-full rounded-md border border-gray-600 bg-gray-900 px-3 py-2 text-sm"
             value={title}
@@ -58,7 +59,9 @@ export default function NewPaintingArticlePage() {
         </div>
 
         <div>
-          <label className="mb-1 block text-sm font-semibold">Content</label>
+          <label className="mb-1 block text-sm font-semibold">
+            {t("new.fields.content")}
+          </label>
           <textarea
             className="min-h-[300px] w-full rounded-md border border-gray-600 bg-gray-900 px-3 py-2 text-sm"
             value={content}
@@ -74,7 +77,7 @@ export default function NewPaintingArticlePage() {
           disabled={isSubmitting}
           className="rounded-md bg-emerald-600 px-4 py-2 text-sm font-semibold hover:bg-emerald-500 disabled:opacity-60"
         >
-          {isSubmitting ? "Saving…" : "Save article"}
+          {isSubmitting ? t("new.buttons.saving") : t("new.buttons.save")}
         </button>
       </form>
     </main>

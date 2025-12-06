@@ -16,62 +16,45 @@ function getInitialTheme(): Theme {
     return stored;
   }
 
-  // Fallback to system preference
-  const prefersDark = window.matchMedia?.(
-    "(prefers-color-scheme: dark)",
-  ).matches;
+  const prefersDark =
+    window.matchMedia &&
+    window.matchMedia("(prefers-color-scheme: dark)").matches;
 
   return prefersDark ? "dark" : "light";
 }
 
-function applyTheme(theme: Theme) {
-  const root = document.documentElement;
-
-  if (theme === "dark") {
-    root.classList.add("dark");
-  } else {
-    root.classList.remove("dark");
-  }
-}
-
 const ThemeToggle = () => {
-  const [theme, setTheme] = useState<Theme>("light");
-  const [isMounted, setIsMounted] = useState(false);
+  const [theme, setTheme] = useState<Theme>(() => getInitialTheme());
 
-  // Initialize theme only on the client side
   useEffect(() => {
-    const initialTheme = getInitialTheme();
-    setTheme(initialTheme);
-    applyTheme(initialTheme);
-    setIsMounted(true);
-  }, []);
+    if (typeof document === "undefined") return;
 
-  const toggleTheme = () => {
-    setTheme((prev) => {
-      const next: Theme = prev === "light" ? "dark" : "light";
-      applyTheme(next);
-      window.localStorage.setItem(THEME_STORAGE_KEY, next);
-      return next;
-    });
-  };
+    const root = document.documentElement;
 
-  // do not render until mounted to avoid hydration mismatch
-  if (!isMounted) return null;
+    if (theme === "dark") {
+      root.classList.add("dark");
+    } else {
+      root.classList.remove("dark");
+    }
+
+    window.localStorage.setItem(THEME_STORAGE_KEY, theme);
+  }, [theme]);
 
   const isDark = theme === "dark";
+
+  const handleToggle = () => {
+    setTheme((prev) => (prev === "dark" ? "light" : "dark"));
+  };
 
   return (
     <button
       type="button"
-      onClick={toggleTheme}
-      className="inline-flex items-center gap-2 rounded-full border border-slate-300 px-3 py-1 text-xs font-medium shadow-sm transition hover:bg-slate-100 dark:border-slate-700 dark:hover:bg-slate-800"
+      onClick={handleToggle}
       aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
+      className="flex items-center gap-2 rounded-full border border-slate-200 bg-white px-2 py-1 text-xs font-medium shadow-sm transition hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-900 dark:hover:bg-slate-800"
     >
-      <span className="hidden sm:inline">
-        {isDark ? "Dark mode" : "Light mode"}
-      </span>
+      <span className="hidden sm:inline">{isDark ? "Dark" : "Light"}</span>
 
-      {/* Switch */}
       <span
         aria-hidden
         className="flex h-4 w-8 items-center rounded-full bg-slate-300 p-0.5 dark:bg-slate-600"

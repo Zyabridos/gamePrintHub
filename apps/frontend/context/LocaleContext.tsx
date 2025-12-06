@@ -1,34 +1,49 @@
 "use client";
 
-import { createContext, useContext, useState, useEffect } from "react";
-import { DEFAULT_LOCALE, type Locale } from "@/locales/i18n";
-import { getTranslations, type AppTranslations } from "@/locales/i18n";
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+  ReactNode,
+} from "react";
+import i18n from "@/locales/i18n";
 
-type LocaleContextType = {
+type Locale = "en" | "ru" | "no";
+
+type LocaleContextValue = {
   locale: Locale;
-  t: AppTranslations;
-  setLocale: (locale: Locale) => void;
+  setLocale: (lng: Locale) => void;
 };
 
-const LocaleContext = createContext<LocaleContextType | null>(null);
+const LocaleContext = createContext<LocaleContextValue | undefined>(undefined);
 
-export function LocaleProvider({ children }: { children: React.ReactNode }) {
-  const [locale, setLocaleState] = useState<Locale>(DEFAULT_LOCALE);
+const LOCALE_STORAGE_KEY = "locale";
 
+export function LocaleProvider({ children }: { children: ReactNode }) {
+  const [locale, setLocaleState] = useState<Locale>("en");
+
+  // инициализация из localStorage / i18n
   useEffect(() => {
-    const saved = localStorage.getItem("locale") as Locale | null;
-    if (saved) setLocaleState(saved);
+    if (typeof window === "undefined") return;
+
+    const stored = localStorage.getItem(LOCALE_STORAGE_KEY) as Locale | null;
+    const initial = stored || (i18n.language as Locale) || "en";
+
+    setLocaleState(initial);
+    i18n.changeLanguage(initial);
   }, []);
 
-  const setLocale = (loc: Locale) => {
-    localStorage.setItem("locale", loc);
-    setLocaleState(loc);
+  const setLocale = (lng: Locale) => {
+    setLocaleState(lng);
+    i18n.changeLanguage(lng);
+    if (typeof window !== "undefined") {
+      localStorage.setItem(LOCALE_STORAGE_KEY, lng);
+    }
   };
 
-  const t = getTranslations(locale);
-
   return (
-    <LocaleContext.Provider value={{ locale, t, setLocale }}>
+    <LocaleContext.Provider value={{ locale, setLocale }}>
       {children}
     </LocaleContext.Provider>
   );

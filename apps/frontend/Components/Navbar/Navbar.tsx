@@ -2,20 +2,26 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useTranslation } from "react-i18next";
 
 import { cn } from "@/lib/utils";
 import { useLocale } from "@/context/LocaleContext";
-import { ThemeToggle } from "../ThemeToggle";
+import { ThemeToggle } from "@/Components/ThemeToggle";
 
 export function Navbar() {
   const pathname = usePathname();
-  const { t, locale, setLocale } = useLocale();
+  const { t } = useTranslation("navbar");
+  const { locale, setLocale } = useLocale();
 
   const navItems = [
-    { href: "/3d-printing-storage", label: t.nav.printing, external: false },
+    {
+      href: "/3d-printing-storage",
+      label: t("printing"),
+      external: false,
+    },
     {
       href: "/painting-articles",
-      label: t.nav.painting_articles,
+      label: t("painting_articles"),
       external: false,
     },
     {
@@ -66,24 +72,27 @@ export function Navbar() {
           })}
         </ul>
 
-        {/* Language Switcher */}
-        <div className="flex gap-2 text-sm">
-          {(["en", "ru", "no"] as const).map((lng) => (
-            <button
-              key={lng}
-              onClick={() => setLocale(lng)}
-              className={cn(
-                "px-2 py-1 rounded-md transition",
-                locale === lng
-                  ? "bg-slate-900 text-white dark:bg-slate-100 dark:text-slate-900"
-                  : "text-slate-600 hover:bg-slate-200 dark:text-slate-300 dark:hover:bg-slate-800",
-              )}
-            >
-              {lng.toUpperCase()}
-            </button>
-          ))}
+        <div className="flex items-center gap-3">
+          {/* Language Switcher */}
+          <div className="flex gap-1 text-sm">
+            {(["en", "ru", "no"] as const).map((lng) => (
+              <button
+                key={lng}
+                onClick={() => setLocale(lng)}
+                className={cn(
+                  "px-2 py-1 rounded-md transition",
+                  locale === lng
+                    ? "bg-slate-900 text-white dark:bg-slate-100 dark:text-slate-900"
+                    : "text-slate-600 hover:bg-slate-200 dark:text-slate-300 dark:hover:bg-slate-800",
+                )}
+              >
+                {lng.toUpperCase()}
+              </button>
+            ))}
+          </div>
+
+          <ThemeToggle />
         </div>
-        <ThemeToggle />
       </nav>
     </header>
   );

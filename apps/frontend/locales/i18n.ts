@@ -1,25 +1,33 @@
-import en from "./en";
+import i18n from "i18next";
+import { initReactI18next } from "react-i18next";
+import LanguageDetector from "i18next-browser-languagedetector";
+
 import ru from "./ru";
+import en from "./en";
 import no from "./no";
 
-export const DEFAULT_LOCALE = "en" as const;
+const defaultLanguage = process.env.REACT_APP_I18N_DEFAULT_LANGUAGE || "en";
 
-export const supportedLocales = ["en", "ru", "no"] as const;
-export type Locale = (typeof supportedLocales)[number];
+i18n
+  .use(LanguageDetector)
+  .use(initReactI18next)
+  .init({
+    fallbackLng: defaultLanguage,
+    resources: {
+      ru,
+      en,
+      no,
+    },
+    ns: Object.keys(ru),
+    defaultNS: "common",
+    interpolation: {
+      escapeValue: false,
+    },
+    pluralSeparator: "_",
+    detection: {
+      order: ["localStorage"],
+      caches: ["localStorage"],
+    },
+  });
 
-export type AppTranslations = ReturnType<typeof getTranslations>;
-
-/**
- * Возвращает словарь для указанного языка
- */
-export function getTranslations(locale: Locale) {
-  switch (locale) {
-    case "ru":
-      return ru;
-    case "no":
-      return no;
-    case "en":
-    default:
-      return en;
-  }
-}
+export default i18n;

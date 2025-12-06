@@ -5,8 +5,8 @@ import { LocaleProvider } from "@/context/LocaleContext";
 import I18nProvider from "../locales/i18nProvider";
 
 export const metadata: Metadata = {
-  title: "Frosthaven Hub",
-  description: "Frosthaven scenarios and 3D printing storage",
+  title: "Games & Print Hub",
+  description: "A hub for 3D printing and painting gaming miniatures.",
 };
 
 export default function RootLayout({
@@ -15,7 +15,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body className="min-h-full bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-50">
         <I18nProvider>
           <LocaleProvider>
