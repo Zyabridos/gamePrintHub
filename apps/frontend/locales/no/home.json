@@ -1,0 +1,13 @@
+{
+  "title": "Sanntids kunnskapsplattform og teknisk læringsmiljø",
+  "description": "Game Print Hub er en personlig full-stack læringsplattform — delvis laget for moro skyld, delvis for å utvikle meg som ingeniør.\n\nHer eksperimenterer jeg med frontend, backend, infrastruktur, DevOps og 3D-print-workflows.\n\nSelv om plattformen er deployet og stadig i utvikling, er den langt fra et ferdig eller polert produkt. Mange funksjoner er ufullstendige, noen ruter feiler, og deler av systemet kan endre seg betydelig fra uke til uke. Game Print Hub er et langsiktig læringsprosjekt, ikke en kommersiell tjeneste.\n\nOver tid, etter hvert som jeg forbedrer kodebasen og arkitekturen, håper jeg at siden blir et fullt fungerende, stabilt miljø som viser min utvikling som ingeniør.",
+  "scenariosTitle": "Frosthaven Scenarios",
+  "scenariosBadge": "scenarier og bilder",
+  "scenariosDescription": "Liste over scenarier med progresjon, notater, house rules og bilder av oppsettet. Perfekt for å huske hva som skjedde i hver mission.",
+  "scenariosCta": "Åpne scenarier →",
+  "printingTitle": "3D Printing Storage",
+  "printingBadge": "STL-bibliotek",
+  "printingDescription": "Lokalt bibliotek med bokser, organisere og andre 3D-modeller for Frosthaven. Med lenker til kilder, notater om print-innstillinger og status (printet / i kø).",
+  "printingCta": "Gå til STL-lagring →",
+  "paintingCta": "Gå til malerartikler →"
+}

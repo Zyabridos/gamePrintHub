@@ -1,0 +1,13 @@
+{
+  "title": "Real-time knowledge platform and technical learning playground",
+  "description": "Game Print Hub is a personal full-stack learning playground — partly built for fun, partly to help me grow as an engineer.\n\nHere I experiment with frontend, backend, infrastructure, DevOps and 3D-printing workflows.\n\nEven though the platform is deployed and actively evolving, it is far from a finished or polished product. Many features are incomplete, some routes are broken, and parts of the system may change significantly from week to week. Game Print Hub is a long-term learning project, not a commercial service.\n\nOver time, as I improve the codebase and architecture, I hope this site will become a fully functional, stable environment that showcases my growth as an engineer.",
+  "scenariosTitle": "Frosthaven Scenarios",
+  "scenariosBadge": "scenarios and photos",
+  "scenariosDescription": "A list of scenarios with progression, notes, house rules and table setup photos. Perfect for remembering what happened in each mission.",
+  "scenariosCta": "Open scenarios →",
+  "printingTitle": "3D Printing Storage",
+  "printingBadge": "STL library",
+  "printingDescription": "A local library of boxes, organizers and other 3D models for Frosthaven. Includes links to sources, notes about print settings, and status (printed / in queue).",
+  "printingCta": "Go to STL storage →",
+  "paintingCta": "Go to painting articles →"
+}

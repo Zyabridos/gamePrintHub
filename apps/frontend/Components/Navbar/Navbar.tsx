@@ -2,8 +2,10 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+
 import { cn } from "@/lib/utils";
-import { useLocale } from "@/app/context/LocaleContext";
+import { useLocale } from "@/context/LocaleContext";
+import { ThemeToggle } from "../ThemeToggle";
 
 export function Navbar() {
   const pathname = usePathname();
@@ -81,6 +83,7 @@ export function Navbar() {
             </button>
           ))}
         </div>
+        <ThemeToggle />
       </nav>
     </header>
   );

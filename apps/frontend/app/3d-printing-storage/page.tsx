@@ -1,6 +1,6 @@
 "use client";
 
-import { useLocale } from "@/app/context/LocaleContext";
+import { useLocale } from "@/context/LocaleContext";
 
 export default function PrintingStoragePage() {
   const { t } = useLocale();

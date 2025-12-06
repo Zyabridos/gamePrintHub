@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "description": "Real-Time Knowledge Base & Content Intelligence Platform built with Next.js, Sanity CMS, Fastify, PostgreSQL, Terraform, Ansible and GitHub Actions.",
-  "author": "Nina Ziabrina <zyabrina95@gmail.com>",
+  "author": "Nina Zyabrina <zyabrina95@gmail.com>",
   "license": "MIT",
   "type": "commonjs",
   "main": "index.js",
@@ -27,8 +27,8 @@
   },
   "workspaces": [
     "apps/*",
-    "cms/*",
-    "infra/*"
+    "infrastructure/*",
+    "packages/*"
   ],
   "repository": {
     "type": "git",

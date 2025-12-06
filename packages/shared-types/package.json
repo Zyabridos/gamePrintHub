@@ -1,0 +1,23 @@
+{
+  "name": "@gameprinthub/shared-types",
+  "version": "1.0.0",
+  "description": "Shared TypeScript DTO and API contract definitions used across Game Print Hub backend and frontend.",
+  "author": "Nina Zyabrina <zyabrina95@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Zyabridos/gamePrintHub.git",
+    "directory": "packages/shared-types"
+  },
+  "keywords": [
+    "types",
+    "shared",
+    "monorepo",
+    "gameprinthub"
+  ],
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc -p tsconfig.json"
+  }
+}

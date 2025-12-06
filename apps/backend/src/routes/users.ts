@@ -1,4 +1,3 @@
-// apps/backend/src/routes/users.ts
 import { FastifyInstance, FastifyPluginAsync } from "fastify";
 import bcrypt from "bcrypt";
 

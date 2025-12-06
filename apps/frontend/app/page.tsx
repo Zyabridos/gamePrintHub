@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useLocale } from "@/app/context/LocaleContext";
+import { useLocale } from "@/context/LocaleContext";
 
 // TODO: remove hardcoded routes, do it via map.
 
