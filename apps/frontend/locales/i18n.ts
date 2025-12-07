@@ -2,9 +2,9 @@ import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
 import LanguageDetector from "i18next-browser-languagedetector";
 
-import ru from "./ru";
-import en from "./en";
-import no from "./no";
+import ru from "./ru/index";
+import en from "./en/index";
+import no from "./no/index";
 
 const defaultLanguage = process.env.REACT_APP_I18N_DEFAULT_LANGUAGE || "en";
 

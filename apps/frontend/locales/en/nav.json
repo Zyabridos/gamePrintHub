@@ -1,6 +1,9 @@
 {
+  "appName": "Game Print Hub",
   "home": "Home",
   "frosthaven": "Frosthaven scenarios",
   "printing": "3D print storage",
-  "painting_articles": "Painting articles"
+  "painting_articles": "Painting articles",
+  "signIn": "Sign In",
+  "signUp": "Sign Up"
 }

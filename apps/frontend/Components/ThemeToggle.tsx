@@ -7,8 +7,9 @@ type Theme = "light" | "dark";
 const THEME_STORAGE_KEY = "theme";
 
 function getInitialTheme(): Theme {
+  // we need this one to avoid SSR issues
   if (typeof window === "undefined") {
-    return "light";
+    return "dark";
   }
 
   const stored = window.localStorage.getItem(THEME_STORAGE_KEY);
@@ -16,11 +17,7 @@ function getInitialTheme(): Theme {
     return stored;
   }
 
-  const prefersDark =
-    window.matchMedia &&
-    window.matchMedia("(prefers-color-scheme: dark)").matches;
-
-  return prefersDark ? "dark" : "light";
+  return "dark"; // default theme
 }
 
 const ThemeToggle = () => {
@@ -69,4 +66,4 @@ const ThemeToggle = () => {
   );
 };
 
-export { ThemeToggle };
+export default ThemeToggle;

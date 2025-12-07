@@ -28,6 +28,18 @@ const frontendRoutes = {
     create: (): string => "/users/new",
     edit: (id: Id): string => `/users/${id}/edit`,
   },
+  printing: {
+    list: (): string => "/3d-printing-storage",
+    new: (): string => "/3d-printing-storage/new",
+    item: (id: Id): string => `/3d-printing-storage/${id}`,
+    edit: (id: Id): string => `/3d-printing-storage/${id}/edit`,
+  },
+  paintingArticles: {
+    list: (): string => "/painting-articles",
+    new: (): string => "/painting-articles/new",
+    item: (id: Id): string => `/painting-articles/${id}`,
+    edit: (id: Id): string => `/painting-articles/${id}/edit`,
+  },
 };
 
 const routes = {

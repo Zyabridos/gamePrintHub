@@ -1,21 +1,19 @@
 "use client";
 
 import Link from "next/link";
-import { useLocale } from "@/context/LocaleContext";
+import { useTranslation } from "react-i18next";
 
 // TODO: remove hardcoded routes, do it via map.
 
 export default function HomePage() {
-  const { t } = useLocale();
+  const { t } = useTranslation("home");
 
   return (
     <div className="space-y-10">
       <section className="space-y-4">
-        <h1 className="text-4xl font-extrabold tracking-tight">
-          {t.home.title}
-        </h1>
+        <h1 className="text-4xl font-extrabold tracking-tight">{t("title")}</h1>
         <p className="max-w-2xl text-base text-slate-600 dark:text-slate-300">
-          {t.home.description}
+          {t("description")}
         </p>
       </section>
 
@@ -26,16 +24,16 @@ export default function HomePage() {
           className="group block rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition hover:-translate-y-1 hover:shadow-md dark:border-slate-800 dark:bg-slate-900"
         >
           <h2 className="mb-2 text-xl font-semibold flex items-center justify-between">
-            {t.home.printingTitle}
+            {t("printingTitle")}
             <span className="text-xs rounded-full border px-2 py-0.5 text-slate-500 group-hover:border-slate-400 dark:text-slate-400">
-              {t.home.printingBadge}
+              {t("printingBadge")}
             </span>
           </h2>
           <p className="mb-4 text-sm text-slate-600 dark:text-slate-300">
-            {t.home.printingDescription}
+            {t("printingDescription")}
           </p>
           <span className="text-sm font-medium text-slate-900 underline underline-offset-4 group-hover:no-underline dark:text-slate-100">
-            {t.home.printingCta}
+            {t("printingCta")}
           </span>
         </Link>
 
@@ -45,16 +43,16 @@ export default function HomePage() {
           className="group block rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition hover:-translate-y-1 hover:shadow-md dark:border-slate-800 dark:bg-slate-900"
         >
           <h2 className="mb-2 text-xl font-semibold flex items-center justify-between">
-            Printing articles
+            {t("paintingTitle")}
             <span className="text-xs rounded-full border px-2 py-0.5 text-slate-500 group-hover:border-slate-400 dark:text-slate-400">
-              badge
+              {t("paintingBadge")}
             </span>
           </h2>
           <p className="mb-4 text-sm text-slate-600 dark:text-slate-300">
-            description
+            {t("paintingDescription")}
           </p>
           <span className="text-sm font-medium text-slate-900 underline underline-offset-4 group-hover:no-underline dark:text-slate-100">
-            {t.home.paintingCta}
+            {t("paintingCta")}
           </span>
         </Link>
       </section>

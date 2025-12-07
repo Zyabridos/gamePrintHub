@@ -5,7 +5,7 @@ const createRegisterSchema = (t: (key: string) => string) =>
     .object({
       username: z.string().min(3, t("signup.errors.usernameMin")),
       email: z.string().email(t("signup.errors.emailInvalid")),
-      password: z.string().min(8, t("signup.errors.passwordMin")),
+      password: z.string().min(2, t("signup.errors.passwordMin")),
       confirmPassword: z.string(),
     })
     .refine((data) => data.password === data.confirmPassword, {

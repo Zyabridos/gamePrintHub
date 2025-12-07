@@ -1,27 +1,19 @@
-import axios from "axios";
-import type { UserPublic } from "@gameprinthub/shared-types";
+import axiosInstance from "./axiosInstance";
+import createCrudApi from "./crudFactory";
+import routes from "../routes";
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:5000";
+const baseUsersPath = routes.app.users.list();
+const createUserPath = routes.app.users.create();
 
-export type CreateUserPayload = {
-  username: string;
-  email: string;
-  password: string;
+const baseCrud = createCrudApi(baseUsersPath); // (list, show, update, delete)
+
+const usersApi = {
+  ...baseCrud,
+
+  create: async (data: any) => {
+    const response = await axiosInstance.post(createUserPath, data);
+    return response.data;
+  },
 };
 
-export async function createUser(
-  payload: CreateUserPayload,
-): Promise<UserPublic> {
-  const response = await axios.post<UserPublic>(
-    `${API_BASE_URL}/api/users`,
-    payload,
-  );
-  return response.data;
-}
-
-export async function getUserById(id: number): Promise<UserPublic> {
-  const response = await axios.get<UserPublic>(
-    `${API_BASE_URL}/api/users/${id}`,
-  );
-  return response.data;
-}
+export default usersApi;

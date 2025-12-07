@@ -1,6 +1,9 @@
 {
+  "appName": "Game Print Hub",
   "home": "Главная",
   "frosthaven": "Сценарии Frosthaven",
   "printing": "Хранилище 3D-печатей",
-  "painting_articles": "Статьи про покраску"
+  "painting_articles": "Статьи про покраску",
+  "signIn": "Войти",
+  "signUp": "Регистрация"
 }
