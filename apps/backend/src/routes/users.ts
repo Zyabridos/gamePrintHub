@@ -56,6 +56,15 @@ export const buildUsersRoutes = ({
       return reply.status(201).send(dto);
     });
 
+    // GET /api/users - list users
+    app.get<{
+      Reply: UserPublic[];
+    }>("/api/users", async (request, reply) => {
+      const users = await db<UserDb>("users").select("*");
+      const dtos = users.map(toUserPublic);
+      return reply.send(dtos);
+    });
+
     // GET /api/users/:id - get user by id
     app.get<{
       Params: { id: string };

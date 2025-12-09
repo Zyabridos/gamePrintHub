@@ -1,6 +1,6 @@
-const path = require("path");
-const fs = require("fs");
-const dotenv = require("dotenv");
+import path from "path";
+import fs from "fs";
+import dotenv from "dotenv";
 
 const ENV = process.env.NODE_ENV || "development";
 const envFiles = [`.env.${ENV}.local`, `.env.${ENV}`, `.env.local`, `.env`];
